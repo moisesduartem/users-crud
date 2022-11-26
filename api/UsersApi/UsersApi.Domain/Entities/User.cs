@@ -25,7 +25,9 @@ namespace UsersApi.Domain.Entities
 
         public override void Validate()
         {
-            if (string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName))
+            IsValid = true;
+
+            if (string.IsNullOrEmpty(FirstName?.Trim()) || string.IsNullOrEmpty(LastName?.Trim()))
                 IsValid = false;
 
             var birthDateIsAfterToday = BirthDate.CompareTo(DateTime.Now) > 0;
@@ -35,7 +37,7 @@ namespace UsersApi.Domain.Entities
 
             var emailValidator = new EmailAddressAttribute();
 
-            if (!emailValidator.IsValid(Email))
+            if (string.IsNullOrEmpty(Email) || !emailValidator.IsValid(Email))
                 IsValid = false;
         }
     }
