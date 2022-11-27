@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UsersApi.Domain.Repositories;
 using UsersApi.Persistence.Context;
+using UsersApi.Persistence.Repositories;
 
 namespace UsersApi.IoC.Extensions
 {
@@ -10,6 +12,7 @@ namespace UsersApi.IoC.Extensions
     {
         public static void AddDependenciesConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
+            AddDIConfiguration(services);
             AddAutoMapperConfiguration(services);
             AddMediatorConfiguration(services);
             AddEFCoreConfiguration(
@@ -18,6 +21,12 @@ namespace UsersApi.IoC.Extensions
             );
         }
 
+        private static IServiceCollection AddDIConfiguration(IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+            return services;
+        }
+        
         private static IServiceCollection AddAutoMapperConfiguration(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

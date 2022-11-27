@@ -19,6 +19,12 @@ namespace UsersApi.Presentation.Controllers
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetUsersQuery(), cancellationToken);
+
+            if (result.Count() == 0)
+            {
+                return NoContent();
+            } 
+
             return Ok(result);
         }
     }

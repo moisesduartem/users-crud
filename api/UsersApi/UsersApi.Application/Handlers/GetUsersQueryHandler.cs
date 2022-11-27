@@ -2,26 +2,28 @@
 using MediatR;
 using UsersApi.Application.DTOs;
 using UsersApi.Application.Queries;
-using UsersApi.Domain.Entities;
+using UsersApi.Domain.Repositories;
 
 namespace UsersApi.Application.Handlers
 {
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IEnumerable<UserDTO>>
     {
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public GetUsersQueryHandler(IMapper mapper)
+        public GetUsersQueryHandler(IMapper mapper, IUserRepository userRepository)
         {
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
-        public Task<IEnumerable<UserDTO>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserDTO>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = new List<User>();
+            var users = await _userRepository.GetAllAsync(cancellationToken);
 
             var result = _mapper.Map<IEnumerable<UserDTO>>(users);
 
-            return Task.FromResult(result);
+            return result;
         }
     }
 }
