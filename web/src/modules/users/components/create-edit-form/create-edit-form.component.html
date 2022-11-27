@@ -1,23 +1,23 @@
 <form [formGroup]="formGroup" class="container">
     <mat-form-field appearance="fill">
         <mat-label>Primeiro Nome</mat-label>
-        <input formControlName="firstName" matInput required>
+        <input id="firstName" formControlName="firstName" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Sobrenome</mat-label>
-        <input formControlName="lastName" matInput required>
+        <input id="lastName" formControlName="lastName" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>E-mail</mat-label>
-        <input formControlName="email" matInput required>
+        <input id="email" formControlName="email" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Data de Nascimento</mat-label>
-        <input formControlName="birthDate" type="date" value="2001-02-01" matInput required>
+        <input id="birthDate" formControlName="birthDate" type="date" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Escolaridade</mat-label>
-        <mat-select formControlName="scholarity" required>
+        <mat-select id="scholarity" formControlName="scholarity" required>
             <mat-option *ngFor="let scholarity of scholarities" [value]="scholarity">
                 {{scholarity}}
             </mat-option>

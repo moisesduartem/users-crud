@@ -31,6 +31,7 @@ export class CreateEditFormComponent implements OnInit {
       scholarity: new FormControl('', [Validators.required]),
     });
 
+    
     if (this.formType === 'EDIT') {
       const user = this.data.user as User;
 
@@ -38,7 +39,7 @@ export class CreateEditFormComponent implements OnInit {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        birthDate: user.birthDate,
+        birthDate: new Date(user.birthDate).toISOString().split('T')[0],
         scholarity: SCHOLARITY_NAMES[user.scholarity]
       });
     }
