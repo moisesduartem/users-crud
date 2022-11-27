@@ -9,11 +9,17 @@ import { User } from './models/user.model';
 })
 export class UsersService {
 
+  private readonly BASE_URL = `${environment.apiUrl}/users`;
+
   constructor(
     private readonly httpClient: HttpClient
   ) { }
 
   getAll(): Observable<User[]> {
-    return this.httpClient.get<User[]>(`${environment.apiUrl}/users`);
+    return this.httpClient.get<User[]>(this.BASE_URL);
+  }
+
+  deleteById(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.BASE_URL}/${id}`);
   }
 }

@@ -31,7 +31,7 @@
                 <button mat-icon-button matTooltip="Editar" color="primary" aria-label="Editar">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Excluir" color="primary" aria-label="Excluir">
+                <button (click)="openDeletionDialog(element)" mat-icon-button matTooltip="Excluir" color="primary" aria-label="Excluir">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
