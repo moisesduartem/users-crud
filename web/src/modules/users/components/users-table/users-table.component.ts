@@ -7,6 +7,7 @@ import { Scholarity, SCHOLARITY_NAMES } from '../../enums/scholarity.enum';
 import { User } from '../../models/user.model';
 import { TableService } from '../../table.service';
 import { UsersService } from '../../users.service';
+import { CreateEditFormComponent } from '../create-edit-form/create-edit-form.component';
 import { UserDeletionDialogComponent } from '../user-deletion-dialog/user-deletion-dialog.component';
 
 const ELEMENT_DATA: User[] = [
@@ -49,8 +50,14 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-  getScholarityName(scholarity: Scholarity) {
+  getScholarityName(scholarity: Scholarity): string {
     return SCHOLARITY_NAMES[scholarity];
+  }
+
+  openCreationDialog(): void {
+    this.dialog.open(CreateEditFormComponent, {
+      width: '800px'
+    });
   }
 
   openDeletionDialog(user: User): void {

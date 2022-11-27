@@ -1,0 +1,27 @@
+<div class="container">
+    <mat-form-field appearance="fill">
+        <mat-label>Primeiro Nome</mat-label>
+        <input matInput required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Sobrenome</mat-label>
+        <input matInput required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input matInput required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Data de Nascimento</mat-label>
+        <input type="date" matInput placeholder="pat@example.com" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Escolaridade</mat-label>
+        <mat-select required>
+            <mat-option *ngFor="let scholarity of scholarities" [value]="scholarity">
+                {{scholarity}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Salvar</button>
+</div>
