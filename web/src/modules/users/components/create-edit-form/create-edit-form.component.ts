@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SCHOLARITY_NAMES } from '../../enums/scholarity.enum';
 import { User } from '../../models/user.model';
+import { TableService } from '../../table.service';
 import { UsersService } from '../../users.service';
 
 @Component({
@@ -18,7 +19,9 @@ export class CreateEditFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { user: User | null },
     private readonly usersService: UsersService,
+    private readonly tableService: TableService,
     private readonly snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<CreateEditFormComponent>
   ) {
     this.formGroup = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
@@ -69,7 +72,9 @@ export class CreateEditFormComponent implements OnInit {
       this.usersService.create(data).subscribe({
         error: (e) => this.snackBar.open('Erro ao tentar criar usuário', 'Fechar'),
         complete: () => {
+          this.tableService.updateValue(true);
           this.snackBar.open('Usuário criado com sucesso', 'Fechar');
+          this.dialogRef.close();
         }
       });
       return;
@@ -78,7 +83,9 @@ export class CreateEditFormComponent implements OnInit {
     this.usersService.update(this.data?.user?.id as number, data).subscribe({
       error: (e) => this.snackBar.open('Erro ao tentar atualizar usuário', 'Fechar'),
       complete: () => {
+        this.tableService.updateValue(true);
         this.snackBar.open('Usuário atualizado com sucesso', 'Fechar');
+        this.dialogRef.close();
       }
     });
   }
