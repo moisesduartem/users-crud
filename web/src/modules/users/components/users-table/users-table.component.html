@@ -35,7 +35,7 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button matTooltip="Editar" color="primary" aria-label="Editar">
+                <button (click)="openEditDialog(element)" mat-icon-button matTooltip="Editar" color="primary" aria-label="Editar">
                     <mat-icon>edit</mat-icon>
                 </button>
                 <button (click)="openDeletionDialog(element)" mat-icon-button matTooltip="Excluir" color="primary"

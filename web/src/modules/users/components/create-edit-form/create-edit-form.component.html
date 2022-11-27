@@ -13,7 +13,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Data de Nascimento</mat-label>
-        <input formControlName="birthDate" type="date" matInput required>
+        <input formControlName="birthDate" type="date" value="2001-02-01" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Escolaridade</mat-label>
@@ -23,5 +23,5 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button [disabled]="shouldDisableSubmitButton" mat-raised-button color="primary">Salvar</button>
+    <button [disabled]="shouldDisableSubmitButton" (click)="submit()" mat-raised-button color="primary">Salvar</button>
 </form>

@@ -56,7 +56,19 @@ export class UsersTableComponent implements OnInit {
 
   openCreationDialog(): void {
     this.dialog.open(CreateEditFormComponent, {
-      width: '800px'
+      width: '800px',
+      data: {
+        user: null
+      }
+    });
+  }
+
+  openEditDialog(user: User): void {
+    this.dialog.open(CreateEditFormComponent, {
+      width: '800px',
+      data: {
+        user
+      }
     });
   }
 

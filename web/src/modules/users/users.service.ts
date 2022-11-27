@@ -15,6 +15,14 @@ export class UsersService {
     private readonly httpClient: HttpClient
   ) { }
 
+  create(data: User): Observable<void> {
+    return this.httpClient.post<void>(this.BASE_URL, data);
+  }
+
+  update(id: number, data: User): Observable<void> {
+    return this.httpClient.put<void>(`${this.BASE_URL}/${id}`, data);
+  }
+
   getAll(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.BASE_URL);
   }
