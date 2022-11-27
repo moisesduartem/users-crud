@@ -1,6 +1,10 @@
-import {Component} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Scholarity, SCHOLARITY_NAMES } from '../../enums/scholarity.enum';
 import { User } from '../../models/user.model';
+import { UsersService } from '../../users.service';
 
 const ELEMENT_DATA: User[] = [
   { 
@@ -18,9 +22,18 @@ const ELEMENT_DATA: User[] = [
   styleUrls: ['users-table.component.scss'],
   templateUrl: 'users-table.component.html',
 })
-export class UsersTableComponent {
+export class UsersTableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'fullName', 'email', 'birthDate', 'scholarity', 'actions'];
   dataSource = ELEMENT_DATA;
+  users$: Observable<User[]> = new Observable<User[]>;
+
+  constructor(
+    private readonly usersService: UsersService
+  ) { }
+
+  ngOnInit(): void {
+    this.users$ = this.usersService.getAll();
+  }
 
   getScholarityName(scholarity: Scholarity) {
     return SCHOLARITY_NAMES[scholarity];
