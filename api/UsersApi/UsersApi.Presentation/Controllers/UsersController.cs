@@ -40,6 +40,27 @@ namespace UsersApi.Presentation.Controllers
             );
         }
 
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> Create(int userId, UpdateUserCommand body, CancellationToken cancellationToken)
+        {
+            var command = new UpdateUserCommand
+            {
+                Id = userId,
+                FirstName = body.FirstName,
+                LastName = body.LastName,
+                BirthDate = body.BirthDate,
+                Email = body.Email,
+                Scholarity = body.Scholarity
+            };
+
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return result.Match(
+                _ => (IActionResult) NoContent(),
+                failure => StatusCode(StatusCodes.Status500InternalServerError, failure)
+            );
+        }
+
         [HttpDelete("{userId}")]
         public async Task<IActionResult> Delete(int userId, CancellationToken cancellationToken)
         {

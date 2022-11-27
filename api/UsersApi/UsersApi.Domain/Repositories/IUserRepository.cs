@@ -9,5 +9,6 @@ namespace UsersApi.Domain.Repositories
         Task<User?> FindByIdAsync(int userId, CancellationToken cancellationToken);
         Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken);
         Task InsertOneAsync(User user, CancellationToken cancellationToken);
+        void UpdateOne(User user);
     }
 }

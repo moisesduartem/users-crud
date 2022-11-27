@@ -23,6 +23,18 @@ namespace UsersApi.Domain.Entities
             Validate();
         }
 
+        public User(int id, string firstName, string lastName, string email, DateTime birthDate, Scholarity scholarity)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            BirthDate = birthDate;
+            Scholarity = scholarity;
+
+            Validate();
+        }
+
         public override void Validate()
         {
             IsValid = true;

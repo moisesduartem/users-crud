@@ -46,5 +46,10 @@ namespace UsersApi.Persistence.Repositories
         {
             await _context.Users.AddAsync(user);
         }
+
+        public void UpdateOne(User user)
+        {
+            _context.Users.Update(user);
+        }
     }
 }
