@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="container__add-user-container">
+        <div class="container__add-user-container__empty-space"></div>
+        <button mat-mini-fab class="mat-elevation-z3" matTooltip="Adicionar" color="primary" aria-label="Adicionar">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
     <table mat-table [dataSource]="users$" class="mat-elevation-z4">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>Código</th>
@@ -31,7 +38,8 @@
                 <button mat-icon-button matTooltip="Editar" color="primary" aria-label="Editar">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button (click)="openDeletionDialog(element)" mat-icon-button matTooltip="Excluir" color="primary" aria-label="Excluir">
+                <button (click)="openDeletionDialog(element)" mat-icon-button matTooltip="Excluir" color="primary"
+                    aria-label="Excluir">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
