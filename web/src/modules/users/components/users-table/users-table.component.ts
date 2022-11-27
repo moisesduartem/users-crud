@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { Scholarity } from '../../enums/scholarity.enum';
+import { Scholarity, SCHOLARITY_NAMES } from '../../enums/scholarity.enum';
 import { User } from '../../models/user.model';
 
 const ELEMENT_DATA: User[] = [
@@ -21,4 +21,8 @@ const ELEMENT_DATA: User[] = [
 export class UsersTableComponent {
   displayedColumns: string[] = ['id', 'fullName', 'email', 'birthDate', 'scholarity', 'actions'];
   dataSource = ELEMENT_DATA;
+
+  getScholarityName(scholarity: Scholarity) {
+    return SCHOLARITY_NAMES[scholarity];
+  }
 }
