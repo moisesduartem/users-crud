@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UsersApi.Persistence.Context;
 
@@ -7,13 +8,13 @@ namespace UsersApi.IoC.Extensions
 {
     public static class DependenciesExtensions
     {
-        public static void AddDependenciesConfiguration(this IServiceCollection services)
+        public static void AddDependenciesConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             AddAutoMapperConfiguration(services);
             AddMediatorConfiguration(services);
             AddEFCoreConfiguration(
                 services, 
-                "Server=localhost;Database=UsersApi;Trusted_Connection=True;"
+                configuration.GetConnectionString("SqlServer") ?? ""
             );
         }
 

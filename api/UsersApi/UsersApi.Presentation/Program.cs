@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // NuGet Packages Configuration (IoC extension)
-builder.Services.AddDependenciesConfiguration();
+builder.Services.AddDependenciesConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
