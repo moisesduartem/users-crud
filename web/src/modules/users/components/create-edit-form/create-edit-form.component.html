@@ -1,27 +1,27 @@
-<div class="container">
+<form [formGroup]="formGroup" class="container">
     <mat-form-field appearance="fill">
         <mat-label>Primeiro Nome</mat-label>
-        <input matInput required>
+        <input formControlName="firstName" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Sobrenome</mat-label>
-        <input matInput required>
+        <input formControlName="lastName" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>E-mail</mat-label>
-        <input matInput required>
+        <input formControlName="email" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Data de Nascimento</mat-label>
-        <input type="date" matInput placeholder="pat@example.com" required>
+        <input formControlName="birthDate" type="date" matInput required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Escolaridade</mat-label>
-        <mat-select required>
+        <mat-select formControlName="scholarity" required>
             <mat-option *ngFor="let scholarity of scholarities" [value]="scholarity">
                 {{scholarity}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary">Salvar</button>
-</div>
+    <button [disabled]="shouldDisableSubmitButton" mat-raised-button color="primary">Salvar</button>
+</form>
