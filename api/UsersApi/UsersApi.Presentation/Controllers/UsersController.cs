@@ -32,9 +32,22 @@ namespace UsersApi.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserCommand command, CancellationToken cancellationToken)
         {
+            var result = await _mediator.Send(command, cancellationToken);
+
+            return result.Match(
+                _ => (IActionResult) StatusCode(StatusCodes.Status201Created),
+                failure => StatusCode(StatusCodes.Status500InternalServerError, failure)
+            );
+        }
+
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> Delete(int userId, CancellationToken cancellationToken)
+        {
+            var command = new DeleteUserCommand { UserId = userId };
+            
             await _mediator.Send(command, cancellationToken);
 
-            return StatusCode(StatusCodes.Status201Created);
+            return NoContent();
         }
     }
 }

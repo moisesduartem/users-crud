@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using UsersApi.Application.Commands;
 using UsersApi.Domain.Entities;
@@ -6,7 +7,7 @@ using UsersApi.Domain.Repositories;
 
 namespace UsersApi.Application.Handlers
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ErrorOr<Created>>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -19,7 +20,7 @@ namespace UsersApi.Application.Handlers
             _logger = logger;
         }
 
-        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Created>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = new User(
                 request.FirstName, 
@@ -31,17 +32,25 @@ namespace UsersApi.Application.Handlers
 
             try
             {
-                await Task.WhenAll(
-                    _userRepository.InsertOneAsync(user, cancellationToken),
-                    _unitOfWork.Commit()
-                );
+                var existingUser = await _userRepository.FindByEmailAsync(request.Email, cancellationToken);
+
+                if (existingUser != null)
+                {
+                    return Error.Validation("Email is already in use");
+                }
+
+                await _userRepository.InsertOneAsync(user, cancellationToken);
+
+                _unitOfWork.Commit();
+
+                return Result.Created;
             } catch (Exception ex)
             {
                 _logger.LogCritical(ex, "An error occurred while attempted to create a new user");
                 _unitOfWork.Dispose();
-            }
 
-            return Unit.Value;
+                return Error.Failure(ex.Message);
+            }
         }
     }
 }

@@ -12,9 +12,9 @@ namespace UsersApi.Persistence.Repositories
             _context = context;
         }
 
-        public Task Commit()
+        public void Commit()
         {
-            return _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Dispose()

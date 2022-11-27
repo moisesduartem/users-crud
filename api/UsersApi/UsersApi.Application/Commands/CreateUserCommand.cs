@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using UsersApi.Domain.Enums;
 
 namespace UsersApi.Application.Commands
 {
-    public class CreateUserCommand : IRequest
+    public class CreateUserCommand : IRequest<ErrorOr<Created>>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
