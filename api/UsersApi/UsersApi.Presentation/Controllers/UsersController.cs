@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UsersApi.Application.Commands;
 using UsersApi.Application.Queries;
 
 namespace UsersApi.Presentation.Controllers
@@ -23,9 +24,17 @@ namespace UsersApi.Presentation.Controllers
             if (result.Count() == 0)
             {
                 return NoContent();
-            } 
+            }
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateUserCommand command, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(command, cancellationToken);
+
+            return StatusCode(StatusCodes.Status201Created);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,7 @@ namespace UsersApi.IoC.Extensions
             AddDIConfiguration(services);
             AddAutoMapperConfiguration(services);
             AddMediatorConfiguration(services);
+            AddFluentValidationConfiguration(services);
             AddEFCoreConfiguration(
                 services, 
                 configuration.GetConnectionString("SqlServer") ?? ""
@@ -24,6 +27,7 @@ namespace UsersApi.IoC.Extensions
         private static IServiceCollection AddDIConfiguration(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
         
@@ -44,6 +48,14 @@ namespace UsersApi.IoC.Extensions
             services.AddDbContext<UsersApiContext>(options =>
                 options.UseSqlServer(connectionString)
             );
+            return services;
+        }
+
+        public static IServiceCollection AddFluentValidationConfiguration(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddFluentValidationAutoValidation();
+
             return services;
         }
     }

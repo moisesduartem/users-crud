@@ -18,5 +18,10 @@ namespace UsersApi.Persistence.Repositories
         {
             return await _context.Users.AsNoTracking().ToListAsync(cancellationToken);
         }
+
+        public async Task InsertOneAsync(User user, CancellationToken cancellationToken)
+        {
+            await _context.Users.AddAsync(user);
+        }
     }
 }
